@@ -74,13 +74,13 @@ def main():
         for j in range(len(pointResult)):
             end = pointResult[j]
 
-        #modeでexceptionが起きた時の処理用
-        tmpEnd = end
+            #modeでexceptionが起きた時の処理用
+            tmpEnd = end
             #シーン番号決定
             while(True):
                 try:
                     sceneNum = mode(amendResultArr[start:tmpEnd])
-                    return
+                    break
                 except:
                     print("最頻値がかぶりました")
                     tmpEnd -= 1
