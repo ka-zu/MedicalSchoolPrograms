@@ -70,6 +70,18 @@ def mode_filter(array,mode_range):
 
     return tmpArray
 
+#平滑化（移動平均フィルタ）
+def smoothing_filter(data_frame):
+    #前後1つと平均をとる
+    tmpDataFrame = data_frame.rolling(window=3, center=True).mean()
+    #NaNとなった部分を前の値から持ってくる
+    tmpDataFrame.iloc[0] = data_frame.iloc[0]
+    tmpDataFrame.iloc[len(tmpDataFrame)-1] = data_frame.iloc[len(tmpDataFrame)-1]
+    #ずれたTimeデータを持ってくる
+    tmpDataFrame.iloc[:,0] = data_frame.iloc[:,0]
+
+    return tmpDataFrame
+
 #テストしたいファイルをtestフォルダの中に
 testCSV = glob.glob("./test/*/vectorized/body.csv")
 
