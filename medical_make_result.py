@@ -34,6 +34,42 @@ def predict(model, x_data):
         y = model.predictor(x)
         return np.argmax(y.data, axis=1)
 
+#最頻値フィルタ関数
+#ある点の後5つの値を見て最頻値を値とする
+def mode_filter(array):
+    tmpArray = []
+    hist = 0#前回の値
+    for i in range(0,len(array)):
+        if(i < len(array)-5):
+            try:
+                tmpArray.append(mode(array[i:i+5]))
+                hist = mode(array[i:i+5])
+            except:
+                #最頻値が求まらなかったら
+                tmpArray.append(hist)
+        else:
+            tmpArray.append(array[i])
+
+    return tmpArray
+
+#最頻値フィルタ関数
+#範囲を任意の定数にした
+def mode_filter(array,mode_range):
+    tmpArray = []
+    hist = 0#前回の値
+    for i in range(0,len(array)):
+        if(i < len(array)-mode_range):
+            try:
+                tmpArray.append(mode(array[i:i+mode_range]))
+                hist = mode(array[i:i+mode_range])
+            except:
+                #最頻値が求まらなかったら
+                tmpArray.append(hist)
+        else:
+            tmpArray.append(array[i])
+
+    return tmpArray
+
 #テストしたいファイルをtestフォルダの中に
 testCSV = glob.glob("./test/*/vectorized/body.csv")
 
