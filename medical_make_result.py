@@ -103,7 +103,10 @@ for f in testCSV:
     #識別する値を格納するカラムを追加する
     testDataDF = pd.concat([testDataDF, pd.DataFrame(columns=['target'])], axis=1)
 
-
+    #識別したいデータを平滑化する（移動平均フィルタ）
+    testDataDF = smoothing_filter(testDataDF)
+    testDataDF = smoothing_filter(testDataDF)
+    testDataDF = smoothing_filter(testDataDF)
 
     #識別したいデータ
     testData = testDataDF.iloc[:,1:69].values
@@ -142,14 +145,21 @@ for f in testCSV:
         else:
             amendResult.append(result[i])
 
+    #2回目の最頻値
+    amendResult2 = mode_filter(amendResult,50)
+    #3回目の最頻値フィルタ
+    amendResult3 = mode_filter(amendResult2,50)
+
     ###結果の出力
     #出力用のデータフレーム
     resultDF = pd.DataFrame()
     #配列をSeriesに変換
     resultSR = pd.Series(result, name="result")
     amendSR = pd.Series(amendResult, name="amendResult")
+    amendSR2 = pd.Series(amendResult2, name="amendResult2")
+    amendSR3 = pd.Series(amendResult3, name="amendResult3")
     #時間と答えと識別番号をくっつける
-    resultDF = pd.concat([resultDF, testDataDF['time'], resultSR, amendSR], axis=1)
+    resultDF = pd.concat([resultDF, testDataDF['time'], resultSR, amendSR, amendSR2, amendSR3], axis=1)
     #csv出力
     resultDF.to_csv("./result//"+filename+"_result.csv", sep=",", index=False, header=True, mode='w')
 
