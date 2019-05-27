@@ -60,7 +60,7 @@ def main():
         bodyDF = bodyDF.rename(columns={bodyDF.columns[0]:"time"})
 
         #コピー
-        amendResultArr = resultDF["amendResult"]
+        amendResultArr = resultDF["amendResult3"]
         pointResult = diffeAve(amendResultArr)
 
         #切り出し点のフォーマットを作成
