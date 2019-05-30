@@ -106,10 +106,22 @@ def main():
             splitStart = end+111
             sceneNumHist = sceneNum
 
+        #切り出したDataFrameのシーン番号の部分を文字にする
+        #シーン名配列
+        splitresultDF["SceneNum"].astype(np.unicode)
+        sceneNames = ["1.傷病者発見","2.安全確認","3.意識確認","4.応援要請","5.呼吸循環確認","6.胸骨圧迫","7.人工呼吸"]
+        for name_index in range(len(sceneNames)):#カラムの型を文字列型にする
+            #mask関数で当てはまる要素を置き換え
+            splitresultDF["SceneNum"].mask(splitresultDF["SceneNum"] == name_index+1,sceneNames[name_index], inplace=True)
+
+        #フレーム数を秒に直す
+        splitresultDF["FrameStart"] = round(splitresultDF["FrameStart"] * 33.3 / 1000,1)
+        splitresultDF["FrameEnd"] = round(splitresultDF["FrameEnd"] * 33.3 / 1000,1)
+
         #切り出し点の出力
         with open("./test/"+dataFiles[i]+"/scene.csv","w") as f:
             writer = csv.writer(f, lineterminator="\n")
-            header = ["No.","Time"," ","Frame"," "," "]
+            header = ["No.","UNIXTime"," ","MovieTime"," "," "]
             header2 = [correctFlg,"start","end","start","end","AI Judge"]
             writer.writerow(header)
             writer.writerow(header2)
