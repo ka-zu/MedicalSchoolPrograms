@@ -6,3 +6,4 @@ itijitaihi/
 mode1/
 todo.txt
 *.model
+*_test.py
