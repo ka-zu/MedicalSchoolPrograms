@@ -1,5 +1,6 @@
 #医大納品用
 #入力されたデータに対して結果を出力するプログラム
+#長さを入れずに学習を行うモデルの結果出力用
 import numpy as np
 import chainer
 from chainer import cuda, Function, gradient_check, report, training, utils, Variable

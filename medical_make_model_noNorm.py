@@ -1,5 +1,6 @@
 #医大納品用
 #学習モデルを作成するプログラム
+#長さを用いずに学習を行う
 import numpy as np
 import chainer
 from chainer import cuda, Function, gradient_check, report, training, utils, Variable

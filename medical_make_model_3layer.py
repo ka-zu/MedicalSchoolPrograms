@@ -1,5 +1,6 @@
 #医大納品用
 #学習モデルを作成するプログラム
+#中間層を三層にしたやつ
 import numpy as np
 import chainer
 from chainer import cuda, Function, gradient_check, report, training, utils, Variable
